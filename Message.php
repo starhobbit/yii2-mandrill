@@ -636,7 +636,7 @@ class Message extends BaseMessage
     public function setHtmlBody($html)
     {
         if (is_string($html)) {
-            $this->_html = HtmlPurifier::process($html);
+            $this->_html = $html;//HtmlPurifier::process($html);
         }
 
         return $this;
