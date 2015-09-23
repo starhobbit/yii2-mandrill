@@ -175,14 +175,18 @@ class Mailer extends BaseMailer
                         $message->getTemplateName(),
                         $message->getTemplateContent(),
                         $message->getMandrillMessageArray(),
-                        $message->isAsync()
+                        $message->isAsync(),
+                        null,
+                        $message->getSendAt()
                     )
                 );
             } else {
                 return $this->wasMessageSentSuccesfully(
                     $this->_mandrill->messages->send(
                         $message->getMandrillMessageArray(),
-                        $message->isAsync()
+                        $message->isAsync(),
+                        null,
+                        $message->getSendAt()
                     )
                 );
             }

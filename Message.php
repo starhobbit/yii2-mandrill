@@ -221,6 +221,11 @@ class Message extends BaseMessage
     private $_mergeLanguage = self::LANGUAGE_MAILCHIMP;
 
     /**
+     * @var null|string
+     */
+    private $_sendAt;
+
+    /**
      * Mandrill does not let users set a charset.
      *
      * @see \nickcv\mandrill\Message::setCharset() setter
@@ -635,6 +640,36 @@ class Message extends BaseMessage
         }
 
         return $this;
+    }
+
+    /**
+     * @param string|\DateTime $date
+     * @return \nickcv\mandrill\Message
+     */
+    public function setSendAt($date)
+    {
+        if (is_string($date)) {
+            $date = new \DateTime($date);
+        }
+
+        if ($date instanceof \DateTime) {
+            $date->setTimezone(new \DateTimeZone('UTC'));
+            $res = $date->format('Y-m-d H:i:s');
+            if ($res !== false) {
+                $this->_sendAt = $res;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns the send at date
+     * @return \DateTime|null|string
+     */
+    public function getSendAt()
+    {
+        return $this->_sendAt;
     }
 
     /**
